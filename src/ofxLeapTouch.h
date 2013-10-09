@@ -4,6 +4,12 @@
 #include "ofxLeapMotion.h"
 #include "ofxGui.h"
 
+enum leapTouchMode{
+	TOUCH_VIA_HANDS,
+	TOUCH_VIA_FINGERS,
+	TOUCH_VIA_BOTH
+};
+
 struct touchlessTouchPoint : public ofPoint {
 	touchlessTouchPoint()
 		:bPressed(false){
@@ -34,17 +40,22 @@ public:
 	void setup();
 	bool update(bool markFrameAsOld = true);
 	void drawFingers();
+	void drawHands();
 
 	ofxPanel gui;
 	ofxFloatSlider minX, maxX, minY, maxY, minZ, maxZ, pressedZ;
 
-protected:
+	leapTouchMode touchMode;
 
+protected:
 	ofPoint getScreenCoord(ofPoint & finger);
+	void touchlessToTouch(touchlessTouchPoint & p, int id);
 
 	map <int, ofPolyline> fingerTrails;
 	map <int, touchlessTouchPoint> fingerTips;
+	map <int, touchlessTouchPoint> handPositions;
 
 	ofxLeapMotion leap;
 	vector <int> fingersFound;
+	vector <int> handsFound;
 };
