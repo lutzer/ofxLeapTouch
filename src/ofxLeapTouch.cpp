@@ -156,8 +156,8 @@ void ofxLeapTouch::drawHands(){
 
 ofPoint ofxLeapTouch::getScreenCoord(ofPoint & fingerTip){
 	ofPoint screenPoint;
-	screenPoint.x = ofMap(fingerTip.x,minX,maxX,0,ofGetScreenWidth());
-	screenPoint.y = ofMap(fingerTip.y,maxY,minY,0,ofGetScreenHeight());
+	screenPoint.x = ofMap(fingerTip.x,minX,maxX,0,ofGetWidth());
+	screenPoint.y = ofMap(fingerTip.y,maxY,minY,0,ofGetHeight());
 	screenPoint.z = fingerTip.z;
 	return screenPoint;
 }
