@@ -7,7 +7,9 @@
 enum leapTouchMode{
 	TOUCH_VIA_HANDS,
 	TOUCH_VIA_FINGERS,
-	TOUCH_VIA_BOTH
+	TOUCH_VIA_BOTH,
+	TOUCH_VIA_OPENHANDS,
+	TOUCH_VIA_CLOSEDHANDS
 };
 
 struct touchlessTouchPoint : public ofPoint {
@@ -49,7 +51,7 @@ public:
 
 protected:
 	ofPoint getScreenCoord(ofPoint & finger);
-	void touchlessToTouch(touchlessTouchPoint & p, int id);
+	void touchlessToTouch(touchlessTouchPoint & p, int id, int fingerCount = 0);
 
 	map <int, ofPolyline> fingerTrails;
 	map <int, touchlessTouchPoint> fingerTips;

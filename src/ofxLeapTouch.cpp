@@ -55,7 +55,8 @@ bool ofxLeapTouch::update(bool bMarkFrameAsOld){
 			}
 
 			// --------- HANDS ---------- //
-			if(touchMode == TOUCH_VIA_HANDS || touchMode == TOUCH_VIA_BOTH){
+			if(touchMode == TOUCH_VIA_HANDS || touchMode == TOUCH_VIA_BOTH
+					|| touchMode == TOUCH_VIA_CLOSEDHANDS || touchMode == TOUCH_VIA_OPENHANDS){
 
 				//TODO hand id * -1
 				ofPoint pt;
@@ -67,7 +68,7 @@ bool ofxLeapTouch::update(bool bMarkFrameAsOld){
 				handPos = getScreenCoord(pt);
 
 				//events
-				touchlessToTouch(handPos, hands[i].id());
+				touchlessToTouch(handPos, hands[i].id(),hands[i].fingers().count());
 
 				//store hand
 				handsFound.push_back(hands[i].id());
@@ -81,8 +82,15 @@ bool ofxLeapTouch::update(bool bMarkFrameAsOld){
 	return isFrameNew;
 }
 
-void ofxLeapTouch::touchlessToTouch(touchlessTouchPoint & touchlessP, int id){
-	if(touchlessP.z < pressedZ){
+void ofxLeapTouch::touchlessToTouch(touchlessTouchPoint & touchlessP, int id, int fingerCount){
+	bool validTouch = true;
+	if(touchMode == TOUCH_VIA_OPENHANDS){
+		validTouch = fingerCount >= 3;
+	}else if(touchMode == TOUCH_VIA_CLOSEDHANDS){
+		validTouch = fingerCount < 2; //2 because of the thumb, which often gets detected even if the hand is closed //TODO differ based on the finger length
+	}
+
+	if(touchlessP.z < pressedZ && validTouch){
 		ofTouchEventArgs touch;
 		touch.x=touchlessP.x;
 		touch.y=touchlessP.y;
