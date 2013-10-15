@@ -15,7 +15,8 @@ void ofxLeapTouch::setup(){
 	gui.add(maxY.setup("max Y",270,200,500));
 	gui.add(minZ.setup("min Z",-70,-200,100));
 	gui.add(maxZ.setup("max Z",100,0,300));
-	gui.add(pressedZ.setup("pressed Z",-30,-100,150));
+	gui.add(pressedFingerZ.setup("pressed Z finger",-30,-100,150));
+	gui.add(pressedHandZ.setup("pressed Z hand",-30,-100,150));
 	gui.loadFromFile("gui.xml");
 
 	//ofxLeapMotion
@@ -45,6 +46,7 @@ bool ofxLeapTouch::update(bool bMarkFrameAsOld){
 					//save finger tip as screenCoords
 					touchlessTouchPoint & fingerTip = fingerTips[finger.id()];
 					fingerTip = getScreenCoord(pt);
+					fingerTip.touchType = TOUCH_TYPE_FINGER;
 
 					//events
 					touchlessToTouch(fingerTip,finger.id());
@@ -66,6 +68,7 @@ bool ofxLeapTouch::update(bool bMarkFrameAsOld){
 				//save finger tip as screenCoords
 				touchlessTouchPoint & handPos = handPositions[hands[i].id()];
 				handPos = getScreenCoord(pt);
+				handPos.touchType = TOUCH_TYPE_HAND;
 
 				//events
 				touchlessToTouch(handPos, hands[i].id(),hands[i].fingers().count());
@@ -90,7 +93,14 @@ void ofxLeapTouch::touchlessToTouch(touchlessTouchPoint & touchlessP, int id, in
 		validTouch = fingerCount < 2; //2 because of the thumb, which often gets detected even if the hand is closed //TODO differ based on the finger length
 	}
 
-	if(touchlessP.z < pressedZ && validTouch){
+	bool isPressed = false;
+	if(touchlessP.touchType == TOUCH_TYPE_FINGER){
+		isPressed = touchlessP.z < pressedFingerZ;
+	}else if(touchlessP.touchType == TOUCH_TYPE_HAND){
+		isPressed = touchlessP.z < pressedHandZ;
+	}
+
+	if(isPressed && validTouch){
 		ofTouchEventArgs touch;
 		touch.x=touchlessP.x;
 		touch.y=touchlessP.y;

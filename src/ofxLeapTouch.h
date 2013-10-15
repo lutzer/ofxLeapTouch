@@ -12,6 +12,11 @@ enum leapTouchMode{
 	TOUCH_VIA_CLOSEDHANDS
 };
 
+enum leapTouchType{
+	TOUCH_TYPE_HAND,
+	TOUCH_TYPE_FINGER
+};
+
 struct touchlessTouchPoint : public ofPoint {
 	touchlessTouchPoint()
 		:bPressed(false){
@@ -32,6 +37,7 @@ struct touchlessTouchPoint : public ofPoint {
 	}
 
 	bool bPressed;
+	leapTouchType touchType;
 };
 
 class ofxLeapTouch {
@@ -45,7 +51,7 @@ public:
 	void drawHands();
 
 	ofxPanel gui;
-	ofxFloatSlider minX, maxX, minY, maxY, minZ, maxZ, pressedZ;
+	ofxFloatSlider minX, maxX, minY, maxY, minZ, maxZ, pressedFingerZ, pressedHandZ;
 
 	leapTouchMode touchMode;
 
