@@ -100,11 +100,12 @@ void ofxLeapTouch::touchlessToTouch(touchlessTouchPoint & touchlessP, int id, in
 		isPressed = touchlessP.z < pressedHandZ;
 	}
 
+	ofTouchEventArgs touch;
+	touch.x=touchlessP.x / ofGetWidth();
+	touch.y=touchlessP.y / ofGetHeight();
+	touch.id=id;
+
 	if(isPressed && validTouch){
-		ofTouchEventArgs touch;
-		touch.x=touchlessP.x;
-		touch.y=touchlessP.y;
-		touch.id=id;
 
 		if(!touchlessP.bPressed){
 			//event -> touch down
@@ -117,10 +118,6 @@ void ofxLeapTouch::touchlessToTouch(touchlessTouchPoint & touchlessP, int id, in
 	}else{
 		if(touchlessP.bPressed){
 			//event -> touch up
-			ofTouchEventArgs touch;
-			touch.x=touchlessP.x;
-			touch.y=touchlessP.y;
-			touch.id=id;
 
 			ofNotifyEvent(ofEvents().touchUp, touch, this);
 		}
