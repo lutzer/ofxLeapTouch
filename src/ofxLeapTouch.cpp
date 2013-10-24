@@ -8,7 +8,7 @@ ofxLeapTouch::~ofxLeapTouch() {}
 
 void ofxLeapTouch::setup(){
 	//ofxGui
-	gui.setup("bla","gui",20,40);
+	gui.setup("leap touch gui","gui",20,40);
 	gui.add(minX.setup("min X",-200,-400,100));
 	gui.add(maxX.setup("max X",130,-100,400));
 	gui.add(minY.setup("min Y",50,0,200));
