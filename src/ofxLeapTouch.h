@@ -14,12 +14,14 @@ enum leapTouchMode{
 
 enum leapTouchType{
 	TOUCH_TYPE_HAND,
-	TOUCH_TYPE_FINGER
+	TOUCH_TYPE_FINGER,
+	TOUCH_TYPE_UNDEFINED
 };
 
 struct touchlessTouchPoint : public ofPoint {
 	touchlessTouchPoint()
 		:bPressed(false){
+		touchType = TOUCH_TYPE_UNDEFINED;
 	}
 
 	touchlessTouchPoint(const ofPoint & other){
@@ -27,6 +29,7 @@ struct touchlessTouchPoint : public ofPoint {
 		y = other.y;
 		z = other.z;
 		bPressed = false;
+		touchType = TOUCH_TYPE_UNDEFINED;
 	}
 
 	touchlessTouchPoint & operator= (const ofPoint & other){
@@ -50,10 +53,14 @@ public:
 	void drawFingers();
 	void drawHands();
 
+	ofxLeapMotion & getLeapMotionObj(){return leap;}
+
 	ofxPanel gui;
 	ofxFloatSlider minX, maxX, minY, maxY, minZ, maxZ, pressedFingerZ, pressedHandZ;
 
 	leapTouchMode touchMode;
+
+	static ofEvent<ofTouchEventArgs> touchlessMoved;
 
 protected:
 	ofPoint getScreenCoord(ofPoint & finger);

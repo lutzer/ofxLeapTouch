@@ -1,5 +1,7 @@
 #include "ofxLeapTouch.h"
 
+ofEvent<ofTouchEventArgs> ofxLeapTouch::touchlessMoved = ofEvent<ofTouchEventArgs>();
+
 ofxLeapTouch::ofxLeapTouch() {
 	touchMode = TOUCH_VIA_FINGERS;
 }
@@ -8,7 +10,7 @@ ofxLeapTouch::~ofxLeapTouch() {}
 
 void ofxLeapTouch::setup(){
 	//ofxGui
-	gui.setup("leap touch gui","gui",20,40);
+	gui.setup("leap touch gui","gui.xml",20,40);
 	gui.add(minX.setup("min X",-200,-400,100));
 	gui.add(maxX.setup("max X",130,-100,400));
 	gui.add(minY.setup("min Y",50,0,200));
@@ -120,8 +122,11 @@ void ofxLeapTouch::touchlessToTouch(touchlessTouchPoint & touchlessP, int id, in
 			//event -> touch up
 
 			ofNotifyEvent(ofEvents().touchUp, touch, this);
+			touchlessP.bPressed = false;
+		}else{
+			//send touchlessMoved
+			ofNotifyEvent(ofxLeapTouch::touchlessMoved,touch,this);
 		}
-		touchlessP.bPressed = false;
 	}
 }
 
