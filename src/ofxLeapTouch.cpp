@@ -169,7 +169,7 @@ void ofxLeapTouch::drawHands(){
 		ofSetColor(180,180,180);
 		float radius = ofMap(pos.z,maxZ,minZ,0,10) * 2;
 		if(pos.bPressed){
-			ofSetColor(50, 50, 220);
+			ofSetColor(0,43,255);
 			radius *= 2;
 		}
 		ofCircle(pos.x,pos.y,radius);
