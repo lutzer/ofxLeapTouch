@@ -37,8 +37,9 @@ bool ofxLeapTouch::update(bool bMarkFrameAsOld){
 		for(int i = 0; i < (int)hands.size(); i++){
 
 			// -------- FINGERS -------- //
-			if(touchMode == TOUCH_VIA_FINGERS || touchMode == TOUCH_VIA_BOTH ){
-
+			if(touchMode == TOUCH_VIA_FINGERS || touchMode == TOUCH_VIA_BOTH || touchMode == TOUCH_VIA_ONE_FINGER){
+				float minZ = 1000.f;
+				int bestFingerId = -1;
 				for(int j = 0; j < hands[i].fingers().count(); j++){
 					ofPoint pt;
 
@@ -54,7 +55,17 @@ bool ofxLeapTouch::update(bool bMarkFrameAsOld){
 					touchlessToTouch(fingerTip,finger.id());
 
 					//store fingers seen this frame
-					fingersFound.push_back(finger.id());
+					if(touchMode != TOUCH_VIA_ONE_FINGER){
+						fingersFound.push_back(finger.id());
+					}else{
+						if(fingerTip.z < minZ){
+							minZ = fingerTip.z;
+							bestFingerId = finger.id();
+						}
+					}
+				}
+				if(touchMode == TOUCH_VIA_ONE_FINGER){
+					fingersFound.push_back(bestFingerId);
 				}
 			}
 
