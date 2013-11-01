@@ -48,6 +48,10 @@ struct touchlessTouchPoint : public ofPoint {
 		return abs(last.z - z);
 	}
 
+	bool ignoreDepthMov(float ignoreFactor){
+		return ignoreFactor*zDiff() > abs(last.x-x) && ignoreFactor*zDiff() > abs(last.y -y );
+	}
+
 	bool bPressed;
 	leapTouchType touchType;
 	ofPoint last;
@@ -67,7 +71,7 @@ public:
 
 	ofxPanel gui;
 	ofxFloatSlider minX, maxX, minY, maxY, minZ, maxZ, pressedFingerZ, pressedHandZ;
-	ofxFloatSlider zDiffMax;
+	ofxFloatSlider zDiffIgnoreFactor;
 
 	leapTouchMode touchMode;
 
