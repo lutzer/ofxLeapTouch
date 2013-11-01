@@ -19,6 +19,8 @@ enum leapTouchType{
 	TOUCH_TYPE_UNDEFINED
 };
 
+using namespace std;
+
 struct touchlessTouchPoint : public ofPoint {
 	touchlessTouchPoint()
 		:bPressed(false){
@@ -29,19 +31,26 @@ struct touchlessTouchPoint : public ofPoint {
 		x = other.x;
 		y = other.y;
 		z = other.z;
+		last = other;
 		bPressed = false;
 		touchType = TOUCH_TYPE_UNDEFINED;
 	}
 
 	touchlessTouchPoint & operator= (const ofPoint & other){
+		last = *this;
 		x = other.x;
 		y = other.y;
 		z = other.z;
 		return *this;
 	}
 
+	float zDiff(){
+		return abs(last.z - z);
+	}
+
 	bool bPressed;
 	leapTouchType touchType;
+	ofPoint last;
 };
 
 class ofxLeapTouch {
@@ -58,6 +67,7 @@ public:
 
 	ofxPanel gui;
 	ofxFloatSlider minX, maxX, minY, maxY, minZ, maxZ, pressedFingerZ, pressedHandZ;
+	ofxFloatSlider zDiffMax;
 
 	leapTouchMode touchMode;
 

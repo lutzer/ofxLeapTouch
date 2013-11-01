@@ -19,6 +19,7 @@ void ofxLeapTouch::setup(){
 	gui.add(maxZ.setup("max Z",100,0,300));
 	gui.add(pressedFingerZ.setup("pressed Z finger",-30,-100,150));
 	gui.add(pressedHandZ.setup("pressed Z hand",-30,-100,150));
+	gui.add(zDiffMax.setup("zDiff to ignore",1.5,0,10));
 	gui.loadFromFile("gui.xml");
 
 	//ofxLeapMotion
@@ -126,7 +127,9 @@ void ofxLeapTouch::touchlessToTouch(touchlessTouchPoint & touchlessP, int id, in
 			touchlessP.bPressed = true;
 		}else{
 			//event -> touch moved
-			ofNotifyEvent(ofEvents().touchMoved, touch, this);
+			cout << touchlessP.zDiff() << endl;
+			if(touchlessP.zDiff() < zDiffMax)
+				ofNotifyEvent(ofEvents().touchMoved, touch, this);
 		}
 	}else{
 		if(touchlessP.bPressed){
