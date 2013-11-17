@@ -2,7 +2,12 @@
 
 #include "ofMain.h"
 #include "ofxLeapMotion.h"
+
+#define USE_OFX_GUI
+
+#ifdef USE_OFX_GUI
 #include "ofxGui.h"
+#endif
 
 enum leapTouchMode{
 	TOUCH_VIA_HANDS,
@@ -69,13 +74,21 @@ public:
 
 	ofxLeapMotion & getLeapMotionObj(){return leap;}
 
+#ifdef USE_OFX_GUI
 	ofxPanel gui;
-	ofxFloatSlider minX, maxX, minY, maxY, minZ, maxZ, pressedFingerZ, pressedHandZ;
+	ofxFloatSlider minX, maxX, minY, maxY, minZ, maxZ;
+	ofxFloatSlider pressedFingerZ, pressedHandZ;
 	ofxFloatSlider zDiffIgnoreFactor;
+#else
+	float minX, maxX, minY, maxY, minZ, maxZ;
+	float pressedFingerZ, pressedHandZ;
+	float zDiffIgnoreFactor;
+#endif
+
 
 	leapTouchMode touchMode;
 
-	static ofEvent<ofTouchEventArgs> touchlessMoved;
+	static ofEvent<ofTouchEventArgs> touchlessMoved;	//for move vs. dragged (hover ...)
 
 protected:
 	ofPoint getScreenCoord(ofPoint & finger);

@@ -6,9 +6,23 @@ ofxLeapTouch::ofxLeapTouch() {
 	touchMode = TOUCH_VIA_FINGERS;
 }
 
-ofxLeapTouch::~ofxLeapTouch() {}
+ofxLeapTouch::~ofxLeapTouch() {
+#ifndef USE_OFX_GUI
+	minX = -200;
+	maxX = 130;
+	minY = 50;
+	maxY = 270;
+	minZ = -70;
+	maxZ = 100;
+	pressedFingerZ = -30;
+	pressedHandZ = -30;
+	zDiffIgnoreFactor = 1;
+#endif
+
+}
 
 void ofxLeapTouch::setup(){
+#ifdef USE_OFX_GUI
 	//ofxGui
 	gui.setup("leap touch gui","gui.xml",20,40);
 	gui.add(minX.setup("min X",-200,-400,100));
@@ -21,6 +35,7 @@ void ofxLeapTouch::setup(){
 	gui.add(pressedHandZ.setup("pressed Z hand",-30,-100,150));
 	gui.add(zDiffIgnoreFactor.setup("zDiff ignore facotr",1,0,10));
 	gui.loadFromFile("gui.xml");
+#endif
 
 	//ofxLeapMotion
 	leap.open();
