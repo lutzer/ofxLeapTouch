@@ -142,7 +142,7 @@ void ofxLeapTouch::touchlessToTouch(touchlessTouchPoint & touchlessP, int id, in
 			touchlessP.bPressed = true;
 		}else{
 			//event -> touch moved
-			cout << touchlessP.zDiff() << endl;
+//			cout << touchlessP.zDiff() << endl;
 //			if(touchlessP.zDiff() < zDiffMax)
 			if(!touchlessP.ignoreDepthMov(zDiffIgnoreFactor)){
 				ofNotifyEvent(ofEvents().touchMoved, touch, this);
