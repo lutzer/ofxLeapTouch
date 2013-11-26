@@ -1,6 +1,7 @@
 #include "ofxLeapTouch.h"
 
 ofEvent<ofTouchEventArgs> ofxLeapTouch::touchlessMoved = ofEvent<ofTouchEventArgs>();
+ofEvent<ofTouchEventArgs> ofxLeapTouch::subtleMoved = ofEvent<ofTouchEventArgs>();
 
 ofxLeapTouch::ofxLeapTouch() {
 	touchMode = TOUCH_VIA_FINGERS;
@@ -16,6 +17,8 @@ ofxLeapTouch::~ofxLeapTouch() {
 	maxZ = 100;
 	pressedFingerZ = -30;
 	pressedHandZ = -30;
+	hoverFingerZ = 100;
+	hoverHandZ = 100;
 	zDiffIgnoreFactor = 1;
 #endif
 
@@ -33,7 +36,9 @@ void ofxLeapTouch::setup(){
 	gui.add(maxZ.setup("max Z",100,0,300));
 	gui.add(pressedFingerZ.setup("pressed Z finger",-30,-100,150));
 	gui.add(pressedHandZ.setup("pressed Z hand",-30,-100,150));
-	gui.add(zDiffIgnoreFactor.setup("zDiff ignore facotr",1,0,10));
+	gui.add(pressedFingerZ.setup("hover Z finger",100,-100,250));
+	gui.add(pressedHandZ.setup("hover Z hand",100,-100,250));
+	gui.add(zDiffIgnoreFactor.setup("zDiff ignore factor",1,0,10));
 	gui.loadFromFile("gui.xml");
 #endif
 
@@ -123,17 +128,22 @@ void ofxLeapTouch::touchlessToTouch(touchlessTouchPoint & touchlessP, int id, in
 	}
 
 	bool isPressed = false;
+	bool isHovered = false;
 	if(touchlessP.touchType == TOUCH_TYPE_FINGER){
 		isPressed = touchlessP.z < pressedFingerZ;
+		isHovered = !isPressed && touchlessP.z < hoverFingerZ;
 	}else if(touchlessP.touchType == TOUCH_TYPE_HAND){
 		isPressed = touchlessP.z < pressedHandZ;
+		isHovered = !isPressed && touchlessP.z < hoverHandZ;
 	}
+
 
 	ofTouchEventArgs touch;
 	touch.x=touchlessP.x / ofGetWidth();
 	touch.y=touchlessP.y / ofGetHeight();
 	touch.id=id;
 
+	//PRESSED
 	if(isPressed && validTouch){
 
 		if(!touchlessP.bPressed){
@@ -141,9 +151,7 @@ void ofxLeapTouch::touchlessToTouch(touchlessTouchPoint & touchlessP, int id, in
 			ofNotifyEvent(ofEvents().touchDown, touch, this);
 			touchlessP.bPressed = true;
 		}else{
-			//event -> touch moved
-//			cout << touchlessP.zDiff() << endl;
-//			if(touchlessP.zDiff() < zDiffMax)
+			//event -> touch moved/dragged
 			if(!touchlessP.ignoreDepthMov(zDiffIgnoreFactor)){
 				ofNotifyEvent(ofEvents().touchMoved, touch, this);
 			}
@@ -155,8 +163,15 @@ void ofxLeapTouch::touchlessToTouch(touchlessTouchPoint & touchlessP, int id, in
 			ofNotifyEvent(ofEvents().touchUp, touch, this);
 			touchlessP.bPressed = false;
 		}else{
-			//send touchlessMoved
-			ofNotifyEvent(ofxLeapTouch::touchlessMoved,touch,this);
+			//HOVER
+			if(isHovered){
+				//event -> touchless moved
+				ofNotifyEvent(ofxLeapTouch::touchlessMoved,touch,this);
+			}
+			//SUBTLE INTERACTION
+			else{
+				ofNotifyEvent(ofxLeapTouch::subtleMoved,touch,this);
+			}
 		}
 	}
 }

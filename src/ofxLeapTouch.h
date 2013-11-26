@@ -36,18 +36,19 @@ public:
 #ifdef USE_OFX_GUI
 	ofxPanel gui;
 	ofxFloatSlider minX, maxX, minY, maxY, minZ, maxZ;
-	ofxFloatSlider pressedFingerZ, pressedHandZ;
+	ofxFloatSlider pressedFingerZ, pressedHandZ, hoverFingerZ, hoverHandZ;
 	ofxFloatSlider zDiffIgnoreFactor;
 #else
 	float minX, maxX, minY, maxY, minZ, maxZ;
-	float pressedFingerZ, pressedHandZ;
+	float pressedFingerZ, pressedHandZ, hoverFingerZ, hoverHandZ;
 	float zDiffIgnoreFactor;
 #endif
 
 
 	leapTouchMode touchMode;
 
-	static ofEvent<ofTouchEventArgs> touchlessMoved;	//for move vs. dragged (hover ...)
+	static ofEvent<ofTouchEventArgs> touchlessMoved;	//touch vs. hover
+	static ofEvent<ofTouchEventArgs> subtleMoved;		//hover vs. subtle movement
 
 protected:
 	ofPoint getScreenCoord(ofPoint & finger);
