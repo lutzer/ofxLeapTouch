@@ -1,7 +1,9 @@
 #include "ofxLeapTouch.h"
 
-ofEvent<ofTouchEventArgs> ofxLeapTouch::touchlessMoved = ofEvent<ofTouchEventArgs>();
+ofEvent<ofTouchEventArgs> ofxLeapTouch::hoverMoved = ofEvent<ofTouchEventArgs>();
 ofEvent<ofTouchEventArgs> ofxLeapTouch::subtleMoved = ofEvent<ofTouchEventArgs>();
+ofEvent<ofTouchEventArgs> ofxLeapTouch::hoverIn = ofEvent<ofTouchEventArgs>();
+ofEvent<ofTouchEventArgs> ofxLeapTouch::subtleIn = ofEvent<ofTouchEventArgs>();
 
 ofxLeapTouch::ofxLeapTouch() {
 	touchMode = TOUCH_VIA_FINGERS;
@@ -147,7 +149,7 @@ void ofxLeapTouch::touchlessToTouch(touchlessTouchPoint & touchlessP, int id, in
 	if(isPressed && validTouch){
 
 		if(touchlessP.state != PRESSED){
-			//event -> touch down
+			//event -> touch down = hover out
 			ofNotifyEvent(ofEvents().touchDown, touch, this);
 			touchlessP.state = PRESSED;
 		}else{
@@ -165,14 +167,31 @@ void ofxLeapTouch::touchlessToTouch(touchlessTouchPoint & touchlessP, int id, in
 
 		//HOVER
 		if(isHovered){
-			//event -> touchless moved
-			ofNotifyEvent(ofxLeapTouch::touchlessMoved,touch,this);
-			touchlessP.state = HOVER;
+			if(touchlessP.state != HOVERED){
+				//event -> hover in = subtle out
+				ofNotifyEvent(ofxLeapTouch::hoverIn,touch,this);
+				touchlessP.state = HOVERED;
+			}else{
+				//event -> touchless/hover moved
+				ofNotifyEvent(ofxLeapTouch::hoverMoved,touch,this);
+			}
 		}
 		//SUBTLE INTERACTION
 		else{
-			ofNotifyEvent(ofxLeapTouch::subtleMoved,touch,this);
-			touchlessP.state = SUBTLE;
+			if(touchlessP.state != SUBTLE){
+				//event -> subtle in
+				if(touchlessP.state == NEW){
+					cout << "new finger id:" << id << endl;
+				}else{
+					cout << "back from hover id: " << id << endl;
+				}
+				ofNotifyEvent(ofxLeapTouch::subtleIn,touch,this);
+				touchlessP.state = SUBTLE;
+			}else{
+				//event -> subtle movement
+				ofNotifyEvent(ofxLeapTouch::subtleMoved,touch,this);
+			}
+
 		}
 	}
 }
@@ -189,7 +208,7 @@ void ofxLeapTouch::drawFingers(){
 		if(tip.state == PRESSED){
 			ofSetColor(200, 50, 30);
 			radius *= 2;
-		}else if(tip.state == HOVER){
+		}else if(tip.state == HOVERED){
 			ofSetColor(200, 50, 30,150);
 		}
 		ofCircle(tip.x,tip.y,radius);
@@ -209,7 +228,7 @@ void ofxLeapTouch::drawHands(){
 		if(pos.state == PRESSED){
 			ofSetColor(200, 50, 30);
 			radius *= 2;
-		}else if(pos.state == HOVER){
+		}else if(pos.state == HOVERED){
 			ofSetColor(200, 50, 30,150);
 		}
 		ofCircle(pos.x,pos.y,radius);

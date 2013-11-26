@@ -47,8 +47,8 @@ public:
 
 	leapTouchMode touchMode;
 
-	static ofEvent<ofTouchEventArgs> touchlessMoved;	//touch vs. hover
-	static ofEvent<ofTouchEventArgs> subtleMoved;		//hover vs. subtle movement
+	static ofEvent<ofTouchEventArgs> hoverMoved, hoverIn;	//touch vs. hover
+	static ofEvent<ofTouchEventArgs> subtleMoved, subtleIn;	//hover vs. subtle
 
 protected:
 	ofPoint getScreenCoord(ofPoint & finger);

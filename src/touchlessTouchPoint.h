@@ -10,8 +10,9 @@ enum leapTouchType{
 
 enum touchPointState{
 	PRESSED,
-	HOVER,
-	SUBTLE
+	HOVERED,
+	SUBTLE,
+	NEW
 };
 
 struct touchlessTouchPoint : public ofPoint {
