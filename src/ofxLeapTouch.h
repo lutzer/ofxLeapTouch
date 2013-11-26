@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "ofxLeapMotion.h"
+#include "touchlessTouchPoint.h"
 
 #define USE_OFX_GUI
 
@@ -18,49 +19,7 @@ enum leapTouchMode{
 	TOUCH_VIA_CLOSEDHANDS
 };
 
-enum leapTouchType{
-	TOUCH_TYPE_HAND,
-	TOUCH_TYPE_FINGER,
-	TOUCH_TYPE_UNDEFINED
-};
-
 using namespace std;
-
-struct touchlessTouchPoint : public ofPoint {
-	touchlessTouchPoint()
-		:bPressed(false){
-		touchType = TOUCH_TYPE_UNDEFINED;
-	}
-
-	touchlessTouchPoint(const ofPoint & other){
-		x = other.x;
-		y = other.y;
-		z = other.z;
-		last = other;
-		bPressed = false;
-		touchType = TOUCH_TYPE_UNDEFINED;
-	}
-
-	touchlessTouchPoint & operator= (const ofPoint & other){
-		last = *this;
-		x = other.x;
-		y = other.y;
-		z = other.z;
-		return *this;
-	}
-
-	float zDiff(){
-		return abs(last.z - z);
-	}
-
-	bool ignoreDepthMov(float ignoreFactor){
-		return ignoreFactor*zDiff() > abs(last.x-x) && ignoreFactor*zDiff() > abs(last.y -y );
-	}
-
-	bool bPressed;
-	leapTouchType touchType;
-	ofPoint last;
-};
 
 class ofxLeapTouch {
 public:
