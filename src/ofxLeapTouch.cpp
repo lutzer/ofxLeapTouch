@@ -36,8 +36,8 @@ void ofxLeapTouch::setup(){
 	gui.add(maxZ.setup("max Z",100,0,300));
 	gui.add(pressedFingerZ.setup("pressed Z finger",-30,-100,150));
 	gui.add(pressedHandZ.setup("pressed Z hand",-30,-100,150));
-	gui.add(pressedFingerZ.setup("hover Z finger",100,-100,250));
-	gui.add(pressedHandZ.setup("hover Z hand",100,-100,250));
+	gui.add(hoverFingerZ.setup("hover Z finger",100,-100,250));
+	gui.add(hoverHandZ.setup("hover Z hand",100,-100,250));
 	gui.add(zDiffIgnoreFactor.setup("zDiff ignore factor",1,0,10));
 	gui.loadFromFile("gui.xml");
 #endif
@@ -146,32 +146,33 @@ void ofxLeapTouch::touchlessToTouch(touchlessTouchPoint & touchlessP, int id, in
 	//PRESSED
 	if(isPressed && validTouch){
 
-		if(!touchlessP.bPressed){
+		if(touchlessP.state != PRESSED){
 			//event -> touch down
 			ofNotifyEvent(ofEvents().touchDown, touch, this);
-			touchlessP.bPressed = true;
+			touchlessP.state = PRESSED;
 		}else{
 			//event -> touch moved/dragged
 			if(!touchlessP.ignoreDepthMov(zDiffIgnoreFactor)){
 				ofNotifyEvent(ofEvents().touchMoved, touch, this);
 			}
 		}
-	}else{
-		if(touchlessP.bPressed){
+	}else if(validTouch){
+		if(touchlessP.state == PRESSED){
 			//event -> touch up
 
 			ofNotifyEvent(ofEvents().touchUp, touch, this);
-			touchlessP.bPressed = false;
-		}else{
-			//HOVER
-			if(isHovered){
-				//event -> touchless moved
-				ofNotifyEvent(ofxLeapTouch::touchlessMoved,touch,this);
-			}
-			//SUBTLE INTERACTION
-			else{
-				ofNotifyEvent(ofxLeapTouch::subtleMoved,touch,this);
-			}
+		}
+
+		//HOVER
+		if(isHovered){
+			//event -> touchless moved
+			ofNotifyEvent(ofxLeapTouch::touchlessMoved,touch,this);
+			touchlessP.state = HOVER;
+		}
+		//SUBTLE INTERACTION
+		else{
+			ofNotifyEvent(ofxLeapTouch::subtleMoved,touch,this);
+			touchlessP.state = SUBTLE;
 		}
 	}
 }
@@ -185,9 +186,11 @@ void ofxLeapTouch::drawFingers(){
 
 		ofSetColor(255,255,255);
 		float radius = ofMap(tip.z,maxZ,minZ,0,10);
-		if(tip.bPressed){
+		if(tip.state == PRESSED){
 			ofSetColor(200, 50, 30);
 			radius *= 2;
+		}else if(tip.state == HOVER){
+			ofSetColor(200, 50, 30,150);
 		}
 		ofCircle(tip.x,tip.y,radius);
 	}
@@ -203,9 +206,11 @@ void ofxLeapTouch::drawHands(){
 
 		ofSetColor(180,180,180);
 		float radius = ofMap(pos.z,maxZ,minZ,0,10) * 2;
-		if(pos.bPressed){
-			ofSetColor(0,43,255);
+		if(pos.state == PRESSED){
+			ofSetColor(200, 50, 30);
 			radius *= 2;
+		}else if(pos.state == HOVER){
+			ofSetColor(200, 50, 30,150);
 		}
 		ofCircle(pos.x,pos.y,radius);
 	}

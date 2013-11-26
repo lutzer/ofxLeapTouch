@@ -1,7 +1,7 @@
 #include "touchlessTouchPoint.h"
 
 touchlessTouchPoint::touchlessTouchPoint()
-		:bPressed(false){
+		:state(SUBTLE){
 		touchType = TOUCH_TYPE_UNDEFINED;
 	}
 
@@ -10,7 +10,7 @@ touchlessTouchPoint::touchlessTouchPoint(const ofPoint & other){
 	y = other.y;
 	z = other.z;
 	last = other;
-	bPressed = false;
+	state = SUBTLE;
 	touchType = TOUCH_TYPE_UNDEFINED;
 }
 

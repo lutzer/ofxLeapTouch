@@ -8,6 +8,12 @@ enum leapTouchType{
 	TOUCH_TYPE_UNDEFINED
 };
 
+enum touchPointState{
+	PRESSED,
+	HOVER,
+	SUBTLE
+};
+
 struct touchlessTouchPoint : public ofPoint {
 	touchlessTouchPoint();
 	touchlessTouchPoint(const ofPoint & other);
@@ -18,7 +24,7 @@ struct touchlessTouchPoint : public ofPoint {
 
 	bool ignoreDepthMov(float ignoreFactor);
 
-	bool bPressed;
+	touchPointState state;
 	leapTouchType touchType;
 	ofPoint last;
 };
