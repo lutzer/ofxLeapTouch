@@ -144,6 +144,7 @@ void ofxLeapTouch::touchlessToTouch(touchlessTouchPoint & touchlessP, int id, in
 	touch.x=touchlessP.x / ofGetWidth();
 	touch.y=touchlessP.y / ofGetHeight();
 	touch.id=id;
+	touch.pressure = touchlessP.z;
 
 	//PRESSED
 	if(isPressed && validTouch){
