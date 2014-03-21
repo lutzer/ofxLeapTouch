@@ -32,8 +32,8 @@ void ofxLeapTouch::setup(){
 	gui.setup("leap touch gui","gui.xml",20,40);
 	gui.add(minX.setup("min X",-200,-400,100));
 	gui.add(maxX.setup("max X",130,-100,400));
-	gui.add(minY.setup("min Y",50,0,200));
-	gui.add(maxY.setup("max Y",270,200,500));
+	gui.add(minY.setup("min Y",50,0,500));
+	gui.add(maxY.setup("max Y",270,0,500));
 	gui.add(minZ.setup("min Z",-70,-200,100));
 	gui.add(maxZ.setup("max Z",100,0,300));
 	gui.add(pressedFingerZ.setup("pressed Z finger",-30,-100,150));
