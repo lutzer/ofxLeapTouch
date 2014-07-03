@@ -7,9 +7,6 @@ ofEvent<ofTouchEventArgs> ofxLeapTouch::subtleIn = ofEvent<ofTouchEventArgs>();
 
 ofxLeapTouch::ofxLeapTouch() {
 	touchMode = TOUCH_VIA_FINGERS;
-}
-
-ofxLeapTouch::~ofxLeapTouch() {
 #ifndef USE_OFX_GUI
 	minX = -200;
 	maxX = 130;
@@ -22,8 +19,11 @@ ofxLeapTouch::~ofxLeapTouch() {
 	hoverFingerZ = 100;
 	hoverHandZ = 100;
 	zDiffIgnoreFactor = 1;
+	minGrabStrength = 0.4;
 #endif
+}
 
+ofxLeapTouch::~ofxLeapTouch() {
 }
 
 void ofxLeapTouch::setup(){
@@ -40,6 +40,7 @@ void ofxLeapTouch::setup(){
 	gui.add(pressedHandZ.setup("pressed Z hand",-30,-100,150));
 	gui.add(hoverFingerZ.setup("hover Z finger",100,-100,250));
 	gui.add(hoverHandZ.setup("hover Z hand",100,-100,250));
+	gui.add(minGrabStrength.setup("min grab strength",0.4,0,1));
 	gui.add(zDiffIgnoreFactor.setup("zDiff ignore factor",1,0,10));
 	gui.loadFromFile("gui.xml");
 #endif
@@ -69,7 +70,7 @@ bool ofxLeapTouch::update(bool bMarkFrameAsOld){
 					const Finger & finger = hands[i].fingers()[j];
 					pt = leap.getofPoint( finger.tipPosition() );
 
-					//save finger tip as screenCoords
+					//save finger tip in screen coordinates
 					touchlessTouchPoint & fingerTip = fingerTips[finger.id()];
 					fingerTip = getScreenCoord(pt);
 					fingerTip.touchType = TOUCH_TYPE_FINGER;
@@ -98,19 +99,19 @@ bool ofxLeapTouch::update(bool bMarkFrameAsOld){
 
 				//TODO hand id * -1
 				ofPoint pt;
+				Leap::Hand & hand = hands[i];
 
-				pt = leap.getofPoint( hands[i].palmPosition() );
+				//store hand
+				handsFound.push_back(hand.id());
+				pt = leap.getofPoint( hand.palmPosition() );
 
-				//save finger tip as screenCoords
+				//save hand position in screen coordinates
 				touchlessTouchPoint & handPos = handPositions[hands[i].id()];
 				handPos = getScreenCoord(pt);
 				handPos.touchType = TOUCH_TYPE_HAND;
 
 				//events
-				touchlessToTouch(handPos, hands[i].id(),hands[i].fingers().count());
-
-				//store hand
-				handsFound.push_back(hands[i].id());
+				touchlessToTouch(handPos, hand.id(),hand.grabStrength());
 			}
 		}
 	}
@@ -121,12 +122,13 @@ bool ofxLeapTouch::update(bool bMarkFrameAsOld){
 	return isFrameNew;
 }
 
-void ofxLeapTouch::touchlessToTouch(touchlessTouchPoint & touchlessP, int id, int fingerCount){
-	bool validTouch = true;
+void ofxLeapTouch::touchlessToTouch(touchlessTouchPoint & touchlessP, int id, float grabStrength){
+	//check open versus close hand
+	bool isValid = true;
 	if(touchMode == TOUCH_VIA_OPENHANDS){
-		validTouch = fingerCount >= 3;
+		isValid = grabStrength < minGrabStrength;
 	}else if(touchMode == TOUCH_VIA_CLOSEDHANDS){
-		validTouch = fingerCount < 2; //2 because of the thumb, which often gets detected even if the hand is closed //TODO differ based on the finger length
+		isValid = grabStrength > minGrabStrength;
 	}
 
 	bool isPressed = false;
@@ -135,10 +137,9 @@ void ofxLeapTouch::touchlessToTouch(touchlessTouchPoint & touchlessP, int id, in
 		isPressed = touchlessP.z < pressedFingerZ;
 		isHovered = !isPressed && touchlessP.z < hoverFingerZ;
 	}else if(touchlessP.touchType == TOUCH_TYPE_HAND){
-		isPressed = touchlessP.z < pressedHandZ;
+		isPressed = isValid && touchlessP.z < pressedHandZ;
 		isHovered = !isPressed && touchlessP.z < hoverHandZ;
 	}
-
 
 	ofTouchEventArgs touch;
 	touch.x=touchlessP.x / ofGetWidth();
@@ -147,7 +148,7 @@ void ofxLeapTouch::touchlessToTouch(touchlessTouchPoint & touchlessP, int id, in
 	touch.pressure = touchlessP.z;
 
 	//PRESSED
-	if(isPressed && validTouch){
+	if(isPressed){
 
 		if(touchlessP.state != PRESSED){
 			//event -> touch down = hover out
@@ -159,7 +160,7 @@ void ofxLeapTouch::touchlessToTouch(touchlessTouchPoint & touchlessP, int id, in
 				ofNotifyEvent(ofEvents().touchMoved, touch, this);
 			}
 		}
-	}else if(validTouch){
+	}else{
 		if(touchlessP.state == PRESSED){
 			//event -> touch up
 

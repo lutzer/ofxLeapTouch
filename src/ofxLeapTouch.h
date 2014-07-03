@@ -38,10 +38,12 @@ public:
 	ofxFloatSlider minX, maxX, minY, maxY, minZ, maxZ;
 	ofxFloatSlider pressedFingerZ, pressedHandZ, hoverFingerZ, hoverHandZ;
 	ofxFloatSlider zDiffIgnoreFactor;
+	ofxFloatSlider minGrabStrength;
 #else
 	float minX, maxX, minY, maxY, minZ, maxZ;
 	float pressedFingerZ, pressedHandZ, hoverFingerZ, hoverHandZ;
 	float zDiffIgnoreFactor;
+	float minGrabStrength;
 #endif
 
 
@@ -52,7 +54,7 @@ public:
 
 protected:
 	ofPoint getScreenCoord(ofPoint & finger);
-	void touchlessToTouch(touchlessTouchPoint & p, int id, int fingerCount = 0);
+	void touchlessToTouch(touchlessTouchPoint & p, int id, float grabStrength = 0);
 
 	map <int, ofPolyline> fingerTrails;
 	map <int, touchlessTouchPoint> fingerTips;
