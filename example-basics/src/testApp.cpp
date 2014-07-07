@@ -21,6 +21,14 @@ void leapTouchExample::update(){
 //--------------------------------------------------------------
 void leapTouchExample::draw(){
 
+	ofSetColor(200);
+	string isConnectedStr = leapTouch.getLeapMotionRef().isConnected() ? " " : " not ";
+	string msg = "ofxLeapTouch - Example App\nLeap is"+isConnectedStr+"connected";
+	msg += "\npress f: finger touch";
+	msg += "\npress h: hand touch";
+
+	ofDrawBitmapString(msg, 20, 20);
+
 	leapTouch.drawFingers();
 	leapTouch.drawHands();
 
