@@ -1,6 +1,7 @@
 #include "testApp.h"
 
 bool bDrawGui = false;
+bool bDrawDetails = true;
 
 //--------------------------------------------------------------
 void leapTouchExample::setup(){
@@ -31,11 +32,12 @@ void leapTouchExample::draw(){
 	msg += "\npress f: finger touch";
 	msg += "\npress h: hand touch";
 	msg += "\npress g: toggle gui";
+	msg += "\npress d: toggle details";
 
 	ofDrawBitmapString(msg, 20, 20);
 
-	leapTouch.drawFingers();
-	leapTouch.drawHands();
+	leapTouch.drawFingers(bDrawDetails);
+	leapTouch.drawHands(bDrawDetails);
 
 	if(bDrawGui){
 		ofSetColor(255,255,255);
@@ -72,6 +74,9 @@ void leapTouchExample::keyPressed(int key){
 	switch(key){
 	case 'g':
 		bDrawGui = !bDrawGui;
+		break;
+	case 'd':
+		bDrawDetails = !bDrawDetails;
 		break;
 	case 'f':
 		leapTouch.touchMode = TOUCH_VIA_ONE_FINGER;
