@@ -7,27 +7,12 @@ ofEvent<ofTouchEventArgs> ofxLeapTouch::subtleIn = ofEvent<ofTouchEventArgs>();
 
 ofxLeapTouch::ofxLeapTouch() {
 	touchMode = TOUCH_VIA_FINGERS;
-#ifndef USE_OFX_GUI
-	minX = -200;
-	maxX = 130;
-	minY = 50;
-	maxY = 270;
-	minZ = -70;
-	maxZ = 100;
-	pressedFingerZ = -30;
-	pressedHandZ = -30;
-	hoverFingerZ = 100;
-	hoverHandZ = 100;
-	zDiffIgnoreFactor = 1;
-	minGrabStrength = 0.4;
-#endif
 }
 
 ofxLeapTouch::~ofxLeapTouch() {
 }
 
 void ofxLeapTouch::setup(){
-#ifdef USE_OFX_GUI
 	//ofxGui
 	gui.setup("leap touch gui","gui.xml",20,40);
 	gui.add(minX.setup("min X",-200,-400,100));
@@ -43,7 +28,6 @@ void ofxLeapTouch::setup(){
 	gui.add(minGrabStrength.setup("min grab strength",0.4,0,1));
 	gui.add(zDiffIgnoreFactor.setup("zDiff ignore factor",1,0,10));
 	gui.loadFromFile("gui.xml");
-#endif
 
 	//ofxLeapMotion
 	leap.open();
