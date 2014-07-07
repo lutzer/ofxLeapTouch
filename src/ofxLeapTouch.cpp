@@ -10,6 +10,7 @@ ofxLeapTouch::ofxLeapTouch() {
 }
 
 ofxLeapTouch::~ofxLeapTouch() {
+	leap.close();
 }
 
 void ofxLeapTouch::setup(){
