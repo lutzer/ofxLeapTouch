@@ -31,8 +31,8 @@ public:
 	bool update(bool markFrameAsOld = true);
 
 	//"debug" draw
-	void drawFingers();
-	void drawHands();
+	void drawFingers(bool leapCoords = true);
+	void drawHands(bool leapCoords = true);
 
 	ofxLeapMotion & getLeapMotionRef(){return leap;}
 

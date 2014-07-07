@@ -58,6 +58,7 @@ bool ofxLeapTouch::update(bool bMarkFrameAsOld){
 					//save finger tip in screen coordinates
 					touchlessTouchPoint & fingerTip = fingerTips[finger.id()];
 					fingerTip = getScreenCoord(pt);
+					fingerTip.leapP = pt;
 					fingerTip.touchType = TOUCH_TYPE_FINGER;
 
 					//events
@@ -93,6 +94,7 @@ bool ofxLeapTouch::update(bool bMarkFrameAsOld){
 				//save hand position in screen coordinates
 				touchlessTouchPoint & handPos = handPositions[hands[i].id()];
 				handPos = getScreenCoord(pt);
+				handPos.leapP = pt;
 				handPos.touchType = TOUCH_TYPE_HAND;
 
 				//events
@@ -183,7 +185,7 @@ void ofxLeapTouch::touchlessToTouch(touchlessTouchPoint & touchlessP, int id, fl
 	}
 }
 
-void ofxLeapTouch::drawFingers(){
+void ofxLeapTouch::drawFingers(bool leapCoords){
 	ofPushStyle();
 	for(int i = 0; i < (int)fingersFound.size(); i++){
 		int id = fingersFound[i];
@@ -199,11 +201,15 @@ void ofxLeapTouch::drawFingers(){
 			ofSetColor(200, 50, 30, 128);
 		}
 		ofCircle(tip.x,tip.y,radius);
+		if(leapCoords){
+			ofSetColor(228);
+			ofDrawBitmapString(tip.toString(),tip.x,tip.y);
+		}
 	}
 	ofPopStyle();
 }
 
-void ofxLeapTouch::drawHands(){
+void ofxLeapTouch::drawHands(bool leapCoords){
 	ofPushStyle();
 	for(int i = 0; i < (int)handsFound.size(); i++){
 		int id = handsFound[i];
@@ -219,6 +225,10 @@ void ofxLeapTouch::drawHands(){
 			ofSetColor(30, 50, 200, 128);
 		}
 		ofCircle(pos.x,pos.y,radius);
+		if(leapCoords){
+			ofSetColor(228);
+			ofDrawBitmapString(pos.toString(),pos.x,pos.y);
+		}
 	}
 	ofPopStyle();
 }

@@ -1,4 +1,5 @@
 #include "touchlessTouchPoint.h"
+#include "ofUtils.h"
 
 touchlessTouchPoint::touchlessTouchPoint()
 		:state(NEW){
@@ -28,5 +29,11 @@ float touchlessTouchPoint::zDiff(){
 
 bool touchlessTouchPoint::ignoreDepthMov(float ignoreFactor){
 	return ignoreFactor*zDiff() > abs(last.x-x) && ignoreFactor*zDiff() > abs(last.y -y );
+}
+
+std::string & touchlessTouchPoint::toString(){
+	debugMsg = "leap X: " + ofToString(leapP.x);
+	debugMsg += "\nleap Y: " + ofToString(leapP.y);
+	return debugMsg;
 }
 

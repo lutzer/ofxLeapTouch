@@ -25,7 +25,12 @@ struct touchlessTouchPoint : public ofPoint {
 
 	bool ignoreDepthMov(float ignoreFactor);
 
+	string & toString();
+
 	touchPointState state;
 	leapTouchType touchType;
 	ofPoint last;
+	ofPoint leapP; //leap coordinates
+private:
+	string debugMsg;
 };
