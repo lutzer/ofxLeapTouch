@@ -9,8 +9,12 @@ void leapTouchExample::setup(){
 	ofEnableAlphaBlending();
 
 	// ----- leap
-	leapTouch.setup();
+	leapTouch.setup(20,100);
 	leapTouch.touchMode = TOUCH_VIA_ONE_FINGER;
+
+	ofAddListener(ofEvents().touchDown,this,&leapTouchExample::touchDown);
+	ofAddListener(ofEvents().touchUp,this,&leapTouchExample::touchUp);
+	ofAddListener(ofEvents().touchMoved,this,&leapTouchExample::touchMoved);
 }
 
 //--------------------------------------------------------------
@@ -26,6 +30,7 @@ void leapTouchExample::draw(){
 	string msg = "ofxLeapTouch - Example App\nLeap is"+isConnectedStr+"connected";
 	msg += "\npress f: finger touch";
 	msg += "\npress h: hand touch";
+	msg += "\npress g: toggle gui";
 
 	ofDrawBitmapString(msg, 20, 20);
 
@@ -36,6 +41,30 @@ void leapTouchExample::draw(){
 		ofSetColor(255,255,255);
 		leapTouch.gui.draw();
 	}
+}
+
+void leapTouchExample::touchDown(ofTouchEventArgs & touch){
+	cout << " cursor added: " + ofToString(touch.id)+
+	" X: "+ofToString(touch.x)+
+	" Y: "+ofToString(touch.y)
+	<< endl;
+
+
+}
+
+void leapTouchExample::touchUp(ofTouchEventArgs & touch){
+	cout << " cursor removed: " + ofToString(touch.id)+
+	 " X: "+ofToString(touch.x)+
+	 " Y: "+ofToString(touch.y)
+	 << endl;
+
+}
+
+void leapTouchExample::touchMoved(ofTouchEventArgs & touch){
+	cout << " cursor updated: " + ofToString(touch.id)+
+	 " X: "+ofToString(touch.x)+
+	 " Y: "+ofToString(touch.y)
+	 << endl;
 }
 
 //--------------------------------------------------------------
@@ -55,7 +84,12 @@ void leapTouchExample::keyPressed(int key){
 
 //--------------------------------------------------------------
 void leapTouchExample::keyReleased(int key){
+}
 
+void leapTouchExample::exit(){
+	ofRemoveListener(ofEvents().touchDown,this,&leapTouchExample::touchDown);
+	ofRemoveListener(ofEvents().touchUp,this,&leapTouchExample::touchUp);
+	ofRemoveListener(ofEvents().touchMoved,this,&leapTouchExample::touchMoved);
 }
 
 //--------------------------------------------------------------

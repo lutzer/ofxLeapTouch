@@ -11,6 +11,10 @@ class leapTouchExample : public ofBaseApp{
 		void update();
 		void draw();
 
+		void touchDown(ofTouchEventArgs & touch);
+		void touchUp(ofTouchEventArgs & touch);
+		void touchMoved(ofTouchEventArgs & touch);
+
 		void keyPressed  (int key);
 		void keyReleased(int key);
 		void mouseMoved(int x, int y );
@@ -20,6 +24,7 @@ class leapTouchExample : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
+		void exit();
 
 		ofxLeapTouch leapTouch;
 };
