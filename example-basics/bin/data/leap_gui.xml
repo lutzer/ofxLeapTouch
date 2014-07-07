@@ -1,0 +1,15 @@
+<leap_touch_gui>
+	<min_X>-200</min_X>
+	<max_X>130</max_X>
+	<min_Y>50</min_Y>
+	<max_Y>270</max_Y>
+	<min_Z>-70</min_Z>
+	<max_Z>250.5</max_Z>
+	<pressed_Z_finger>-30</pressed_Z_finger>
+	<pressed_Z_hand>-10</pressed_Z_hand>
+	<hover_Z_finger>50</hover_Z_finger>
+	<hover_Z_hand>70</hover_Z_hand>
+	<min_grab_strength>0.4</min_grab_strength>
+	<zDiff_ignore_factor>1</zDiff_ignore_factor>
+<leap_touch_gui/>
+</leap_touch_gui>
