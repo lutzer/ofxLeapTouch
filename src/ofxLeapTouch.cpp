@@ -13,9 +13,9 @@ ofxLeapTouch::~ofxLeapTouch() {
 	leap.close();
 }
 
-void ofxLeapTouch::setup(){
+void ofxLeapTouch::setup(float guiX, float guiY){
 	//ofxGui
-	gui.setup("leap touch gui","leap_gui.xml",20,40);
+	gui.setup("leap touch gui","leap_gui.xml",guiX,guiY);
 	gui.add(minX.setup("min X",-200,-400,100));
 	gui.add(maxX.setup("max X",130,-100,400));
 	gui.add(minY.setup("min Y",50,0,500));

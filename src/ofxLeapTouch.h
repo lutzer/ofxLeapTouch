@@ -21,7 +21,7 @@ public:
 	ofxLeapTouch();
 	virtual ~ofxLeapTouch();
 
-	void setup();
+	void setup(float guiX = 20, float guiY = 40);
 
 	/* process leap motion data hand send touch events
 
