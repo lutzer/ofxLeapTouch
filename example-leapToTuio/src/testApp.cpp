@@ -4,7 +4,7 @@ bool bDrawGui = false;
 bool bDrawDetails = true;
 
 //--------------------------------------------------------------
-void leapTouchExample::setup(){
+void leapToTuioExample::setup(){
 //	ofSetLogLevel(OF_LOG_VERBOSE);
 	ofBackground(0);
 	ofEnableAlphaBlending();
@@ -13,22 +13,22 @@ void leapTouchExample::setup(){
 	leapTouch.setup(20,100);
 	leapTouch.touchMode = TOUCH_VIA_ONE_FINGER;
 
-	ofAddListener(ofEvents().touchDown,this,&leapTouchExample::touchDown);
-	ofAddListener(ofEvents().touchUp,this,&leapTouchExample::touchUp);
-	ofAddListener(ofEvents().touchMoved,this,&leapTouchExample::touchMoved);
+	ofAddListener(ofEvents().touchDown,this,&leapToTuioExample::touchDown);
+	ofAddListener(ofEvents().touchUp,this,&leapToTuioExample::touchUp);
+	ofAddListener(ofEvents().touchMoved,this,&leapToTuioExample::touchMoved);
 
 	myTuioServer.start("127.0.0.1",3333);
 	myTuioServer.setVerbose(true);
 }
 
 //--------------------------------------------------------------
-void leapTouchExample::update(){
+void leapToTuioExample::update(){
 	leapTouch.update(true);
 	myTuioServer.run();
 }
 
 //--------------------------------------------------------------
-void leapTouchExample::draw(){
+void leapToTuioExample::draw(){
 
 	ofSetColor(200);
 	string isConnectedStr = leapTouch.getLeapMotionRef().isConnected() ? " " : " not ";
@@ -49,7 +49,7 @@ void leapTouchExample::draw(){
 	}
 }
 
-void leapTouchExample::touchDown(ofTouchEventArgs & touch){
+void leapToTuioExample::touchDown(ofTouchEventArgs & touch){
 	cout << " cursor added: " + ofToString(touch.id)+
 	" X: "+ofToString(touch.x)+
 	" Y: "+ofToString(touch.y)
@@ -60,7 +60,7 @@ void leapTouchExample::touchDown(ofTouchEventArgs & touch){
 }
 
 
-void leapTouchExample::touchUp(ofTouchEventArgs & touch){
+void leapToTuioExample::touchUp(ofTouchEventArgs & touch){
 	cout << " cursor removed: " + ofToString(touch.id)+
 	 " X: "+ofToString(touch.x)+
 	 " Y: "+ofToString(touch.y)
@@ -69,7 +69,7 @@ void leapTouchExample::touchUp(ofTouchEventArgs & touch){
 	myTuioServer.removeCursor(cursors.at(touch.id));
 }
 
-void leapTouchExample::touchMoved(ofTouchEventArgs & touch){
+void leapToTuioExample::touchMoved(ofTouchEventArgs & touch){
 	cout << " cursor updated: " + ofToString(touch.id)+
 	 " X: "+ofToString(touch.x)+
 	 " Y: "+ofToString(touch.y)
@@ -79,7 +79,7 @@ void leapTouchExample::touchMoved(ofTouchEventArgs & touch){
 }
 
 //--------------------------------------------------------------
-void leapTouchExample::keyPressed(int key){
+void leapToTuioExample::keyPressed(int key){
 	switch(key){
 	case 'g':
 		bDrawGui = !bDrawGui;
@@ -97,46 +97,46 @@ void leapTouchExample::keyPressed(int key){
 }
 
 //--------------------------------------------------------------
-void leapTouchExample::keyReleased(int key){
+void leapToTuioExample::keyReleased(int key){
 }
 
-void leapTouchExample::exit(){
-	ofRemoveListener(ofEvents().touchDown,this,&leapTouchExample::touchDown);
-	ofRemoveListener(ofEvents().touchUp,this,&leapTouchExample::touchUp);
-	ofRemoveListener(ofEvents().touchMoved,this,&leapTouchExample::touchMoved);
-}
-
-//--------------------------------------------------------------
-void leapTouchExample::mouseMoved(int x, int y ){
-
+void leapToTuioExample::exit(){
+	ofRemoveListener(ofEvents().touchDown,this,&leapToTuioExample::touchDown);
+	ofRemoveListener(ofEvents().touchUp,this,&leapToTuioExample::touchUp);
+	ofRemoveListener(ofEvents().touchMoved,this,&leapToTuioExample::touchMoved);
 }
 
 //--------------------------------------------------------------
-void leapTouchExample::mouseDragged(int x, int y, int button){
+void leapToTuioExample::mouseMoved(int x, int y ){
 
 }
 
 //--------------------------------------------------------------
-void leapTouchExample::mousePressed(int x, int y, int button){
+void leapToTuioExample::mouseDragged(int x, int y, int button){
 
 }
 
 //--------------------------------------------------------------
-void leapTouchExample::mouseReleased(int x, int y, int button){
+void leapToTuioExample::mousePressed(int x, int y, int button){
 
 }
 
 //--------------------------------------------------------------
-void leapTouchExample::windowResized(int w, int h){
+void leapToTuioExample::mouseReleased(int x, int y, int button){
 
 }
 
 //--------------------------------------------------------------
-void leapTouchExample::gotMessage(ofMessage msg){
+void leapToTuioExample::windowResized(int w, int h){
 
 }
 
 //--------------------------------------------------------------
-void leapTouchExample::dragEvent(ofDragInfo dragInfo){
+void leapToTuioExample::gotMessage(ofMessage msg){
+
+}
+
+//--------------------------------------------------------------
+void leapToTuioExample::dragEvent(ofDragInfo dragInfo){
 
 }

@@ -4,7 +4,7 @@
 #include "ofxLeapTouch.h"
 #include "ofxTuioServer.h"
 
-class leapTouchExample : public ofBaseApp{
+class leapToTuioExample : public ofBaseApp{
 
 	public:
 		void setup();
