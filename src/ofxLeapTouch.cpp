@@ -61,12 +61,12 @@ bool ofxLeapTouch::update(bool bMarkFrameAsOld){
 					fingerTip.leapP = pt;
 					fingerTip.touchType = TOUCH_TYPE_FINGER;
 
-					//events
-					touchlessToTouch(fingerTip,finger.id());
-
-					//store fingers seen this frame
+					//store and handle fingers seen this frame
 					if(touchMode != TOUCH_VIA_ONE_FINGER){
+						//store
 						fingersFound.push_back(finger.id());
+						//handle events
+						touchlessToTouch(fingerTip,finger.id());
 					}else{
 						if(fingerTip.z < minZ){
 							minZ = fingerTip.z;
@@ -75,7 +75,10 @@ bool ofxLeapTouch::update(bool bMarkFrameAsOld){
 					}
 				}
 				if(touchMode == TOUCH_VIA_ONE_FINGER){
+					//store
 					fingersFound.push_back(bestFingerId);
+					//handle events
+					touchlessToTouch(fingerTips[bestFingerId],bestFingerId);
 				}
 			}
 
