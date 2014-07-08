@@ -47,6 +47,7 @@ public:
 
 	static ofEvent<ofTouchEventArgs> hoverMoved, hoverIn;	//touch vs. hover
 	static ofEvent<ofTouchEventArgs> subtleMoved, subtleIn;	//hover vs. subtle
+	//TODO sublte and hover out?
 
 protected:
 	ofPoint getScreenCoord(ofPoint & finger);
