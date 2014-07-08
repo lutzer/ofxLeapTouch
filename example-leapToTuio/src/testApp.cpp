@@ -56,6 +56,7 @@ void leapToTuioExample::touchDown(ofTouchEventArgs & touch){
 	<< endl;
 
 	TuioCursor * cursor = myTuioServer.addCursor(touch.x*ofGetWidth(),touch.y*ofGetHeight());
+	//store cursor for later use
 	if(cursors.find(touch.id) == cursors.end())
 		cursors.insert(CursorPair(touch.id,cursor));
 	else
