@@ -1,0 +1,5 @@
+ofxTangibleUI
+ofxLeapTouch
+ofxLeapMotion
+ofxGui
+ofxXmlSettings
