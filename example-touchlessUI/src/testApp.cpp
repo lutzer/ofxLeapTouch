@@ -18,7 +18,7 @@ void touchlessUIExample::setup(){
 	// ----- Touchless-Touch UI
 	ofPoint center(ofGetWidth()/3.f,ofGetHeight()/3.f);
 
-	//test handles
+	// test handles
 	handle.setup(center.x,center.y,300,300);
 	yfixed.setup(center.x,100,300,125);
 	xfixed.setup(100,center.y,125,300);
@@ -49,9 +49,6 @@ void touchlessUIExample::setup(){
 	r2.startListeningTo(r1,TANGIBLE_ROTATE);
 	r1.startListeningTo(r3,TANGIBLE_ROTATE);
 	r3.startListeningTo(r1,TANGIBLE_ROTATE);
-
-
-
 }
 
 //--------------------------------------------------------------
