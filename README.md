@@ -20,15 +20,15 @@ Examples
 
 ### example-basics
 
-Short description
+Small example with debug draw of fingers (red) or hands (blue). Depending on the leap Z position each finger/hand has the state **subtle** (grey), **hovering** (transparent) or **pressed** (non-transparent).
 
-![bla](llink)
+![example-basics](https://raw.githubusercontent.com/ixds/ofxLeapTouch/master/example-basics.png)
 
 ### example-leapToTuio
 
-Using ofxLeapTouch in combination with ofxTuioWrapper to send Touchless-Touch interactions as `TuioCursors`
+Using ofxLeapTouch in combination with [ofxTuioWrapper](http://github.com/fx-lange/ofxTuioWrapper/) to send Touchless-Touch interactions as `TuioCursors`. For testing you can use the [tuioExample](https://github.com/fx-lange/ofxTuioWrapper/tree/master/tuioExample) as a client as shown below. Only pressed fingers / hands are forwarded.
 
-![bla](link)
+![example-leapToTuio screenshot](https://raw.githubusercontent.com/ixds/ofxLeapTouch/master/example-leapToTuio.png)
 
 ### example-touchlessTouch
 
@@ -49,4 +49,3 @@ Dependencies
 * ofxGui (part of the oF core)
 * optional: [ofxTuioWrapper](http://github.com/fx-lange/ofxTuioWrapper/) (example-leapToTuio)
 * optional: [ofxTangibleUI](http://github.com/fx-lange/ofxTangibleUI/) (example-touchlessUI)
-
