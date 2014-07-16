@@ -9,16 +9,18 @@ void leapToTuioExample::setup(){
 	ofBackground(0);
 	ofEnableAlphaBlending();
 
-	// ----- leap
+	// ----- Leap setup
 	leapTouch.setup(20,100);
 	leapTouch.touchMode = TOUCH_VIA_ONE_FINGER;
 
+	// ----- TUIO server setup
+	myTuioServer.start("127.0.0.1",3333);
+	myTuioServer.setVerbose(true);
+
+	// ----- listen to touch events
 	ofAddListener(ofEvents().touchDown,this,&leapToTuioExample::touchDown);
 	ofAddListener(ofEvents().touchUp,this,&leapToTuioExample::touchUp);
 	ofAddListener(ofEvents().touchMoved,this,&leapToTuioExample::touchMoved);
-
-	myTuioServer.start("127.0.0.1",3333);
-	myTuioServer.setVerbose(true);
 }
 
 //--------------------------------------------------------------

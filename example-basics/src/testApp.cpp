@@ -1,6 +1,6 @@
 #include "testApp.h"
 
-bool bDrawGui = false;
+bool bDrawGui = true;
 bool bDrawDetails = true;
 
 //--------------------------------------------------------------
@@ -13,6 +13,7 @@ void leapTouchExample::setup(){
 	leapTouch.setup(20,100);
 	leapTouch.touchMode = TOUCH_VIA_ONE_FINGER;
 
+	// ----- forward touch events - just for debug messages
 	ofAddListener(ofEvents().touchDown,this,&leapTouchExample::touchDown);
 	ofAddListener(ofEvents().touchUp,this,&leapTouchExample::touchUp);
 	ofAddListener(ofEvents().touchMoved,this,&leapTouchExample::touchMoved);
