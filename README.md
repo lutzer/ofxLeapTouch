@@ -15,6 +15,23 @@ Features
 * Addional events to work with hover/subtle states 
 * Distant to screen (z-Axis) gets send as touch pressure
 
+Examples
+--------
+
+### example-basics
+
+Short description
+
+![bla](llink)
+
+### example-leapToTuio
+
+Using ofxLeapTouch in combination with ofxTuioWrapper to send Touchless-Touch interactions as `TuioCursors`
+
+![bla](link)
+
+### example-touchlessTouch
+
 Setup
 ------
 
@@ -32,3 +49,4 @@ Dependencies
 * ofxGui (part of the oF core)
 * optional: [ofxTuioWrapper](http://github.com/fx-lange/ofxTuioWrapper/) (example-leapToTuio)
 * optional: [ofxTangibleUI](http://github.com/fx-lange/ofxTangibleUI/) (example-touchlessUI)
+
