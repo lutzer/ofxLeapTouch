@@ -32,6 +32,10 @@ Using ofxLeapTouch in combination with [ofxTuioWrapper](http://github.com/fx-lan
 
 ### example-touchlessTouch
 
+Controlling [ofxTangibleUI](http://github.com/fx-lange/ofxTangibleUI/) basic handles via Touchless-Touch. `ofxTangibleHandle` is listening to touch events by default - no direct connection needed.
+
+![example-touchlessTouch screenshot](https://raw.githubusercontent.com/ixds/ofxLeapTouch/master/example-touchlessTouch.png)
+
 Setup
 ------
 
