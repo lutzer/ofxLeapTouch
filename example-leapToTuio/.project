@@ -4,8 +4,6 @@
 	<comment></comment>
 	<projects>
 		<project>addons</project>
-		<project>libs</project>
-		<project>openFrameworks</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
