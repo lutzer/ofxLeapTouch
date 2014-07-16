@@ -31,6 +31,7 @@ struct touchlessTouchPoint : public ofPoint {
 	leapTouchType touchType;
 	ofPoint last;
 	ofPoint leapP; //leap coordinates
+	bool extended; //non-extended fingers equals subtle
 private:
 	string debugMsg;
 };

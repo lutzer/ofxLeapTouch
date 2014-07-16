@@ -53,6 +53,7 @@ bool ofxLeapTouch::update(bool bMarkFrameAsOld){
 					ofPoint pt;
 
 					const Finger & finger = hands[i].fingers()[j];
+
 					pt = leap.getofPoint( finger.tipPosition() );
 
 					//save finger tip in screen coordinates
@@ -60,6 +61,7 @@ bool ofxLeapTouch::update(bool bMarkFrameAsOld){
 					fingerTip = getScreenCoord(pt);
 					fingerTip.leapP = pt;
 					fingerTip.touchType = TOUCH_TYPE_FINGER;
+					fingerTip.extended = finger.isExtended();
 
 					//store and handle fingers seen this frame
 					if(touchMode != TOUCH_VIA_ONE_FINGER){
@@ -74,7 +76,7 @@ bool ofxLeapTouch::update(bool bMarkFrameAsOld){
 						}
 					}
 				}
-				if(touchMode == TOUCH_VIA_ONE_FINGER){
+				if(touchMode == TOUCH_VIA_ONE_FINGER && bestFingerId != -1){
 					//store
 					fingersFound.push_back(bestFingerId);
 					//handle events
@@ -124,8 +126,10 @@ void ofxLeapTouch::touchlessToTouch(touchlessTouchPoint & touchlessP, int id, fl
 	bool isPressed = false;
 	bool isHovered = false;
 	if(touchlessP.touchType == TOUCH_TYPE_FINGER){
-		isPressed = touchlessP.z < pressedFingerZ;
-		isHovered = !isPressed && touchlessP.z < hoverFingerZ;
+		if(touchlessP.extended){ //non-extended fingers equals subtle
+			isPressed = touchlessP.z < pressedFingerZ;
+			isHovered = !isPressed && touchlessP.z < hoverFingerZ;
+		}
 	}else if(touchlessP.touchType == TOUCH_TYPE_HAND){
 		isPressed = isValid && touchlessP.z < pressedHandZ;
 		isHovered = !isPressed && touchlessP.z < hoverHandZ;
