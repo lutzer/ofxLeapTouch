@@ -34,6 +34,7 @@ bool touchlessTouchPoint::ignoreDepthMov(float ignoreFactor){
 std::string & touchlessTouchPoint::toString(){
 	debugMsg = "leap X: " + ofToString(leapP.x);
 	debugMsg += "\nleap Y: " + ofToString(leapP.y);
+	debugMsg += "\nleap Z: " + ofToString(leapP.z);
 	return debugMsg;
 }
 
