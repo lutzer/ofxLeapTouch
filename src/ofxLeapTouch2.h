@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ofxLeapMotion.h"
+#include "ofxLeapMotion2.h"
 #include "touchlessTouchPoint.h"
 #include "ofxGui.h"
 
@@ -16,10 +16,10 @@ enum leapTouchMode{
 
 using namespace std;
 
-class ofxLeapTouch {
+class ofxLeapTouch2 {
 public:
-	ofxLeapTouch();
-	virtual ~ofxLeapTouch();
+	ofxLeapTouch2();
+	virtual ~ofxLeapTouch2();
 
 	void setup(float guiX = 20, float guiY = 40);
 

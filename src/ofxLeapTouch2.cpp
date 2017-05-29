@@ -1,19 +1,19 @@
-#include "ofxLeapTouch.h"
+#include "ofxLeapTouch2.h"
 
-ofEvent<ofTouchEventArgs> ofxLeapTouch::hoverMoved = ofEvent<ofTouchEventArgs>();
-ofEvent<ofTouchEventArgs> ofxLeapTouch::subtleMoved = ofEvent<ofTouchEventArgs>();
-ofEvent<ofTouchEventArgs> ofxLeapTouch::hoverIn = ofEvent<ofTouchEventArgs>();
-ofEvent<ofTouchEventArgs> ofxLeapTouch::subtleIn = ofEvent<ofTouchEventArgs>();
+ofEvent<ofTouchEventArgs> ofxLeapTouch2::hoverMoved = ofEvent<ofTouchEventArgs>();
+ofEvent<ofTouchEventArgs> ofxLeapTouch2::subtleMoved = ofEvent<ofTouchEventArgs>();
+ofEvent<ofTouchEventArgs> ofxLeapTouch2::hoverIn = ofEvent<ofTouchEventArgs>();
+ofEvent<ofTouchEventArgs> ofxLeapTouch2::subtleIn = ofEvent<ofTouchEventArgs>();
 
-ofxLeapTouch::ofxLeapTouch() {
+ofxLeapTouch2::ofxLeapTouch2() {
 	touchMode = TOUCH_VIA_FINGERS;
 }
 
-ofxLeapTouch::~ofxLeapTouch() {
+ofxLeapTouch2::~ofxLeapTouch2() {
 	leap.close();
 }
 
-void ofxLeapTouch::setup(float guiX, float guiY){
+void ofxLeapTouch2::setup(float guiX, float guiY){
 	//ofxGui
 	gui.setup("leap touch gui","leap_gui.xml",guiX,guiY);
 	gui.add(minX.setup("min X",-200,-400,100));
@@ -34,7 +34,7 @@ void ofxLeapTouch::setup(float guiX, float guiY){
 	leap.open();
 }
 
-bool ofxLeapTouch::update(bool bMarkFrameAsOld){
+bool ofxLeapTouch2::update(bool bMarkFrameAsOld){
 	fingersFound.clear();
 	handsFound.clear();
 
@@ -114,7 +114,7 @@ bool ofxLeapTouch::update(bool bMarkFrameAsOld){
 	return isFrameNew;
 }
 
-void ofxLeapTouch::touchlessToTouch(touchlessTouchPoint & touchlessP, int id, float grabStrength){
+void ofxLeapTouch2::touchlessToTouch(touchlessTouchPoint & touchlessP, int id, float grabStrength){
 	//check open versus close hand
 	bool isValid = true;
 	if(touchMode == TOUCH_VIA_OPENHANDS){
@@ -165,11 +165,11 @@ void ofxLeapTouch::touchlessToTouch(touchlessTouchPoint & touchlessP, int id, fl
 		if(isHovered){
 			if(touchlessP.state != HOVERED){
 				//event -> hover in = subtle out
-				ofNotifyEvent(ofxLeapTouch::hoverIn,touch,this);
+				ofNotifyEvent(ofxLeapTouch2::hoverIn,touch,this);
 				touchlessP.state = HOVERED;
 			}else{
 				//event -> touchless/hover moved
-				ofNotifyEvent(ofxLeapTouch::hoverMoved,touch,this);
+				ofNotifyEvent(ofxLeapTouch2::hoverMoved,touch,this);
 			}
 		}
 		//SUBTLE INTERACTION
@@ -181,18 +181,18 @@ void ofxLeapTouch::touchlessToTouch(touchlessTouchPoint & touchlessP, int id, fl
 				}else{
 //					cout << "back from hover id: " << id << endl;
 				}
-				ofNotifyEvent(ofxLeapTouch::subtleIn,touch,this);
+				ofNotifyEvent(ofxLeapTouch2::subtleIn,touch,this);
 				touchlessP.state = SUBTLE;
 			}else{
 				//event -> subtle movement
-				ofNotifyEvent(ofxLeapTouch::subtleMoved,touch,this);
+				ofNotifyEvent(ofxLeapTouch2::subtleMoved,touch,this);
 			}
 
 		}
 	}
 }
 
-void ofxLeapTouch::drawFingers(bool leapCoords){
+void ofxLeapTouch2::drawFingers(bool leapCoords){
 	ofPushStyle();
 	for(int i = 0; i < (int)fingersFound.size(); i++){
 		int id = fingersFound[i];
@@ -216,7 +216,7 @@ void ofxLeapTouch::drawFingers(bool leapCoords){
 	ofPopStyle();
 }
 
-void ofxLeapTouch::drawHands(bool leapCoords){
+void ofxLeapTouch2::drawHands(bool leapCoords){
 	ofPushStyle();
 	for(int i = 0; i < (int)handsFound.size(); i++){
 		int id = handsFound[i];
@@ -240,11 +240,10 @@ void ofxLeapTouch::drawHands(bool leapCoords){
 	ofPopStyle();
 }
 
-ofPoint ofxLeapTouch::getScreenCoord(ofPoint & fingerTip){
+ofPoint ofxLeapTouch2::getScreenCoord(ofPoint & fingerTip){
 	ofPoint screenPoint;
 	screenPoint.x = ofMap(fingerTip.x,minX,maxX,0,ofGetWidth());
 	screenPoint.y = ofMap(fingerTip.y,maxY,minY,0,ofGetHeight());
 	screenPoint.z = fingerTip.z;
 	return screenPoint;
 }
-
