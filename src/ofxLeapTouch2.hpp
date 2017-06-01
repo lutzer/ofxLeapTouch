@@ -2,8 +2,9 @@
 
 #include "ofMain.h"
 #include "ofxLeapMotion2.h"
-#include "touchlessTouchPoint.h"
+#include "touchlessTouchPoint.hpp"
 #include "ofxGui.h"
+#include "ofxLeapTouchEventArgs.hpp"
 
 enum leapTouchMode{
 	TOUCH_VIA_HANDS,
@@ -16,12 +17,16 @@ enum leapTouchMode{
 
 using namespace std;
 
-class ofxLeapTouch2 {
+class ofxLeapTouch {
 public:
-	ofxLeapTouch2();
-	virtual ~ofxLeapTouch2();
+	ofxLeapTouch();
+    ofxLeapTouch(ofxLeapMotion *leap);
+	virtual ~ofxLeapTouch();
 
 	void setup(float guiX = 20, float guiY = 40);
+    
+    void calibrateMin(ofPoint bottomLeft);
+    void calibrateMax(ofPoint topRight);
 
 	/* process leap motion data hand send touch events
 
@@ -34,7 +39,7 @@ public:
 	void drawFingers(bool leapCoords = true);
 	void drawHands(bool leapCoords = true);
 
-	ofxLeapMotion & getLeapMotionRef(){return leap;}
+	ofxLeapMotion * getLeapMotionRef(){ return leap;}
 
 	ofxPanel gui;
 	ofxFloatSlider minX, maxX, minY, maxY, minZ, maxZ;
@@ -42,12 +47,11 @@ public:
 	ofxFloatSlider zDiffIgnoreFactor;
 	ofxFloatSlider minGrabStrength;
 
-
 	leapTouchMode touchMode;
 
-	static ofEvent<ofTouchEventArgs> hoverMoved, hoverIn;	//touch vs. hover
-	static ofEvent<ofTouchEventArgs> subtleMoved, subtleIn;	//hover vs. subtle
-	//TODO sublte and hover out?
+    ofEvent<ofLeapTouchEventArgs> touchMoved, touchDown, touchUp;
+    ofEvent<ofLeapTouchEventArgs> hoverMoved, hoverIn;	//touch vs. hover
+    ofEvent<ofLeapTouchEventArgs> subtleMoved, subtleIn;	//hover vs. subtle
 
 protected:
 	ofPoint getScreenCoord(ofPoint & finger);
@@ -59,7 +63,7 @@ protected:
 	map <int, touchlessTouchPoint> fingerTips;
 	map <int, touchlessTouchPoint> handPositions;
 
-	ofxLeapMotion leap;
+	ofxLeapMotion *leap;
 	vector <int> fingersFound;
 	vector <int> handsFound;
 };

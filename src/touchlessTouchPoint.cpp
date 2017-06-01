@@ -1,4 +1,4 @@
-#include "touchlessTouchPoint.h"
+#include "touchlessTouchPoint.hpp"
 #include "ofUtils.h"
 
 touchlessTouchPoint::touchlessTouchPoint()
