@@ -17,6 +17,7 @@ class ofLeapTouchEventArgs : public ofTouchEventArgs {
     public:
     
         ofVec3f leapTouchPosition;
+        float touchDistance;
         int leapFingerId = -1;
     
 };
