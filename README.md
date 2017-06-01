@@ -1,5 +1,7 @@
-ofxLeapTouch
+ofxLeapTouch2
 ================
+
+*This is a modified version of the ofxLeapTouch addon, which can be found here: https://github.com/ixds/ofxLeapTouch. This addon utilizes ofxLeapMotion2 instead and adds some additional functionality.*
 
 ofxLeapTouch is an [openFrameworks](https://github.com/openframeworks/openFrameworks) addon to use the [Leap Motion](https://leapmotion.com) as a Touchless-Touch controller. After setting up a mid-air "touch" sensitive area near your screen, ofxLeapTouch interprets interactions in this field like a touch pad and sends basic openFrameworks touch events accordingly. Due to the use of these [core events](http://openframeworks.cc/documentation/events/ofCoreEvents.html), combining it with touch reactive user interfaces should be straightforward. 
 
@@ -39,7 +41,7 @@ Controlling [ofxTangibleUI](http://github.com/fx-lange/ofxTangibleUI/) basic han
 Setup
 ------
 
-* ofxLeapTouch is built upon top of [ofxLeapMotion](http://github.com/ofTheo/ofxLeapMotion/). Please follow the install instructions there and run the basic example before you continue.
+* ofxLeapTouch is built upon top of [ofxLeapMotion2](https://github.com/genekogan/ofxLeapMotion2). Please follow the install instructions there and run the basic example before you continue.
 * To get a copy of the repository you can download the source from [http://github.com/ixds/ofxLeapTouch](http://github.com/ixds/ofxLeapTouch) or, alternatively, you can clone git: 
 
   `git clone git://github.com/ixds/ofxLeapTouch.git`
@@ -49,7 +51,7 @@ Setup
 Dependencies
 ------------
 
-* [ofxLeapMotion](http://github.com/ofTheo/ofxLeapMotion/)
+* [ofxLeapMotion2](https://github.com/genekogan/ofxLeapMotion2)
 * ofxGui (part of the oF core)
 * optional: [ofxTuioWrapper](http://github.com/fx-lange/ofxTuioWrapper/) (example-leapToTuio)
 * optional: [ofxTangibleUI](http://github.com/fx-lange/ofxTangibleUI/) (example-touchlessUI)
