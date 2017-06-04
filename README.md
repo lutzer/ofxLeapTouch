@@ -36,5 +36,3 @@ Dependencies
 
 * [ofxLeapMotion2](https://github.com/genekogan/ofxLeapMotion2)
 * ofxGui (part of the oF core)
-* optional: [ofxTuioWrapper](http://github.com/fx-lange/ofxTuioWrapper/) (example-leapToTuio)
-* optional: [ofxTangibleUI](http://github.com/fx-lange/ofxTangibleUI/) (example-touchlessUI)
