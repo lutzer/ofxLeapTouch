@@ -26,27 +26,10 @@ Small example with debug draw of fingers (red) or hands (blue). Depending on the
 
 ![example-basics](https://raw.githubusercontent.com/ixds/ofxLeapTouch/master/example-basics.png)
 
-### example-leapToTuio
-
-Using ofxLeapTouch in combination with [ofxTuioWrapper](http://github.com/fx-lange/ofxTuioWrapper/) to send Touchless-Touch interactions as `TuioCursors`. For testing you can use the [tuioExample](https://github.com/fx-lange/ofxTuioWrapper/tree/master/tuioExample) as a client as shown below. Only pressed fingers / hands are forwarded.
-
-![example-leapToTuio screenshot](https://raw.githubusercontent.com/ixds/ofxLeapTouch/master/example-leapToTuio.png)
-
-### example-touchlessTouch
-
-Controlling [ofxTangibleUI](http://github.com/fx-lange/ofxTangibleUI/) basic handles via Touchless-Touch. `ofxTangibleHandle` is listening to touch events by default - no direct connection needed.
-
-![example-touchlessTouch screenshot](https://raw.githubusercontent.com/ixds/ofxLeapTouch/master/example-touchlessTouch.png)
-
 Setup
 ------
 
-* ofxLeapTouch is built upon top of [ofxLeapMotion2](https://github.com/genekogan/ofxLeapMotion2). Please follow the install instructions there and run the basic example before you continue.
-* To get a copy of the repository you can download the source from [http://github.com/ixds/ofxLeapTouch](http://github.com/ixds/ofxLeapTouch) or, alternatively, you can clone git: 
-
-  `git clone git://github.com/ixds/ofxLeapTouch.git`
-
-* The addon should be located at `openFrameworks/addons/ofxLeapTouch/`.
+* ofxLeapTouch2 is built upon top of [ofxLeapMotion2](https://github.com/genekogan/ofxLeapMotion2). Please follow the install instructions there and run the basic example before you continue.
 
 Dependencies
 ------------
