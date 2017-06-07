@@ -24,12 +24,14 @@ Examples
 
 Small example with debug draw of fingers (red) or hands (blue). Depending on the leap Z position each finger/hand has the state **subtle** (grey), **hovering** (transparent) or **pressed** (non-transparent).
 
-![example-basics](https://raw.githubusercontent.com/ixds/ofxLeapTouch/master/example-basics.png)
+![example-basics](example.png)
 
 Setup
 ------
 
 * ofxLeapTouch2 is built upon top of [ofxLeapMotion2](https://github.com/genekogan/ofxLeapMotion2). Please follow the install instructions there and run the basic example before you continue.
+* If you want to setup your own project, you need to make sure libLeap.dylib is copied to the bin directory
+  * ibn xcode: go to buid phases -> copy files and add addons/ofxLeapMotion2/libs/lib/osx/libLeap.dylib with destination "products directory"
 
 Dependencies
 ------------

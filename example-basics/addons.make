@@ -1,4 +1,0 @@
-ofxLeapTouch
-ofxLeapMotion
-ofxGui
-ofxXmlSettings
