@@ -27,4 +27,6 @@ public:
     void exit();
     
     ofxLeapTouch leapTouch;
+    
+    bool calibrating = 0;
 };

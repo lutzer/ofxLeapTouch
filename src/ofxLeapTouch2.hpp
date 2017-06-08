@@ -24,9 +24,10 @@ public:
 	virtual ~ofxLeapTouch();
 
 	void setup(float guiX = 20, float guiY = 40);
+
     
-    void calibrateMin(ofPoint bottomLeft);
-    void calibrateMax(ofPoint topRight);
+    void onButtonPointMinClicked();
+    void onButtonPointMaxClicked();
 
 	/* process leap motion data hand send touch events
 
@@ -46,6 +47,7 @@ public:
 	ofxFloatSlider pressedFingerZ, pressedHandZ, hoverFingerZ, hoverHandZ;
 	ofxFloatSlider zDiffIgnoreFactor;
 	ofxFloatSlider minGrabStrength;
+    ofxButton buttonPointMin, buttonPointMax;
 
 	leapTouchMode touchMode;
 
@@ -58,6 +60,8 @@ protected:
 
 	//process hand and finger information and possibly send touch events
 	void touchlessToTouch(touchlessTouchPoint & p, int id, float grabStrength = 0);
+    
+    ofPoint lastPosition;
 
 	map <int, ofPolyline> fingerTrails;
 	map <int, touchlessTouchPoint> fingerTips;

@@ -160,6 +160,7 @@
 		6948EE371B920CB800B5AC1A /* local_addons */ = {
 			isa = PBXGroup;
 			children = (
+				0B8952DA895FF834F362CF31 /* ofxLeapTouch2.cpp */,
 			);
 			name = local_addons;
 			sourceTree = "<group>";
@@ -272,7 +273,6 @@
 		ECDCBC268924C8FFA65986A9 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				0B8952DA895FF834F362CF31 /* ofxLeapTouch2.cpp */,
 				9887B03BAFCFE25F1F97284E /* ofxLeapTouch2.hpp */,
 				FE70B387616742B648869C83 /* ofxLeapTouchEventArgs.hpp */,
 				6A091CA887F1841D4FF429A2 /* touchlessTouchPoint.cpp */,

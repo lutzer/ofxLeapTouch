@@ -27,18 +27,24 @@ void ofxLeapTouch::setup(float guiX, float guiY){
 	gui.add(hoverHandZ.setup("hover Z hand",70,-100,250));
 	gui.add(minGrabStrength.setup("min grab strength",0.4,0,1));
 	gui.add(zDiffIgnoreFactor.setup("zDiff ignore factor",1,0,10));
+    gui.add(buttonPointMin.setup("Set Bottom Left Screen Position"));
+    gui.add(buttonPointMax.setup("Set Top Right Screen Position"));
 	gui.loadFromFile("leap_gui.xml");
-
+    
+    buttonPointMin.addListener(this, &ofxLeapTouch::onButtonPointMinClicked);
+    buttonPointMax.addListener(this, &ofxLeapTouch::onButtonPointMaxClicked);
+    
     leap->open();
 }
 
-void ofxLeapTouch::calibrateMin(ofPoint bottomLeft) {
-    minX = bottomLeft.x;
-    minY = bottomLeft.y;
+void ofxLeapTouch::onButtonPointMinClicked() {
+    minX = lastPosition.x;
+    minY = lastPosition.y;
 }
-void ofxLeapTouch::calibrateMax(ofPoint topRight) {
-    maxX = topRight.x;
-    maxY = topRight.y;
+
+void ofxLeapTouch::onButtonPointMaxClicked() {
+    maxX = lastPosition.x;
+    maxY = lastPosition.y;
 }
 
 bool ofxLeapTouch::update(bool bMarkFrameAsOld){
@@ -122,6 +128,9 @@ bool ofxLeapTouch::update(bool bMarkFrameAsOld){
 }
 
 void ofxLeapTouch::touchlessToTouch(touchlessTouchPoint & touchlessP, int id, float grabStrength){
+    
+    lastPosition = touchlessP.leapP;
+    
 	//check open versus close hand
 	bool isValid = true;
 	if(touchMode == TOUCH_VIA_OPENHANDS){
@@ -220,7 +229,7 @@ void ofxLeapTouch::drawFingers(bool leapCoords){
 		}else if(tip.state == HOVERED){
 			ofSetColor(200, 50, 30, 128);
 		}
-		ofCircle(tip.x,tip.y,radius);
+		ofDrawCircle(tip.x,tip.y,radius);
 		if(leapCoords){
 			ofSetColor(228);
 			ofDrawBitmapString(tip.toString(),tip.x,tip.y);
@@ -245,7 +254,7 @@ void ofxLeapTouch::drawHands(bool leapCoords){
 		}else if(pos.state == HOVERED){
 			ofSetColor(30, 50, 200, 128);
 		}
-		ofCircle(pos.x,pos.y,radius);
+		ofDrawCircle(pos.x,pos.y,radius);
 		if(leapCoords){
 			ofSetColor(228);
 			ofDrawBitmapString(pos.toString(),pos.x,pos.y);
