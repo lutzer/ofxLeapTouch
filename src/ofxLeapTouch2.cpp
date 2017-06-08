@@ -27,8 +27,9 @@ void ofxLeapTouch::setup(float guiX, float guiY){
 	gui.add(hoverHandZ.setup("hover Z hand",70,-100,250));
 	gui.add(minGrabStrength.setup("min grab strength",0.4,0,1));
 	gui.add(zDiffIgnoreFactor.setup("zDiff ignore factor",1,0,10));
-    gui.add(buttonPointMin.setup("Set Bottom Left Screen Position"));
-    gui.add(buttonPointMax.setup("Set Top Right Screen Position"));
+    gui.add((new ofxLabel(ofToString("Calibrate with leap:"))));
+    gui.add(buttonPointMin.setup("Set Bottom Left Point"));
+    gui.add(buttonPointMax.setup("Set Top Right Point"));
 	gui.loadFromFile("leap_gui.xml");
     
     buttonPointMin.addListener(this, &ofxLeapTouch::onButtonPointMinClicked);
